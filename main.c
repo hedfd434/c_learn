@@ -9,14 +9,20 @@ int y = 10;
 
 int main(int argc, char **argv)
 {
-    car* ptr_2 = car_init(200, "toYODA");
 
-    y = z++;
+    for(int i = 0; i < argc; i++)
+    {
+        printf("argc = %d ddddd = %s\n", i, argv[i]);
+    }
+    
+    // car* ptr_2 = car_init(200, "toYODA");
+
+    // y = z++;
     /* example above is equal to:
     y = z;
     z++;*/
 
-    y = ++z;
+    // y = ++z;
     /* example above is equal to 
     z++;
     y = z;*/
