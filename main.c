@@ -10,13 +10,18 @@ int y = 10;
 int main(int argc, char **argv)
 {
 
+    printf("loop start\n");
+    
     for(int i = 0; i < argc; i++)
     {
-        printf("argc = %d ddddd = %s\n", i, argv[i]);
+        printf("argc = %d = %s\n", i, argv[i]);
     }
-    
-    // car* ptr_2 = car_init(200, "toYODA");
 
+    printf("\nloop end\n");
+    
+    car* ptr_2 = car_init(200, "toYODA");
+
+    printf("test print %s\n", ptr_2->brand);
     // y = z++;
     /* example above is equal to:
     y = z;
@@ -30,5 +35,5 @@ int main(int argc, char **argv)
 
     /* in overall if iteration operator at first place the itaration is first then assigment of value*/
     /* works also with decremenetation*/
-    return 0;
+     return 0;
 }

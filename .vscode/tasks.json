@@ -10,10 +10,10 @@
                 "main.c",
                 "lib.c",
                 "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "C:\\Users\\kubaw\\Desktop\\c_learn\\main.exe"
             ],
             "options": {
-                "cwd": "${fileDirname}"
+                "cwd": "C:\\Users\\kubaw\\Desktop\\c_learn"
             },
             "problemMatcher": [
                 "$gcc"
