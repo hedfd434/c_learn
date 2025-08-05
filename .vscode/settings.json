@@ -1,8 +1,8 @@
 {
     "files.associations": {
-        "lib.h": "c",
+        "stdlib.h": "c",
         "stdio.h": "c",
-        "string.h": "c",
-        "stdlib.h": "c"
+        "time.h": "c",
+        "windows.h": "c"
     }
 }

@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "lib.h"
+// #include "lib.h"
 
 int z = 20;
 
@@ -19,9 +19,9 @@ int main(int argc, char **argv)
 
     printf("\nloop end\n");
     
-    car* ptr_2 = car_init(200, "toYODA");
+    // car* ptr_2 = car_init(200, "toYODA");
 
-    printf("test print %s\n", ptr_2->brand);
+    // printf("test print %s\n", ptr_2->brand);
     // y = z++;
     /* example above is equal to:
     y = z;
