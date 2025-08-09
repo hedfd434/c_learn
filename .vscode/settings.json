@@ -3,6 +3,11 @@
         "stdlib.h": "c",
         "stdio.h": "c",
         "time.h": "c",
-        "windows.h": "c"
+        "windows.h": "c",
+        "vending_machine.h": "c",
+        "deque": "c",
+        "string": "c",
+        "unordered_map": "c",
+        "vector": "c"
     }
 }

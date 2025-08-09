@@ -4,7 +4,7 @@
 #include <string.h>
 #include "timers.h"
 
-time_t epoch_1;
+// time_t epoch_1;
 
 //functions
 timer_a* timer_init(char name_1[], int trigger_resolution_1, void (*trigger_callBack)(void))

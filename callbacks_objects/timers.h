@@ -12,7 +12,7 @@ typedef struct timer_a //is it name or alias ??
 
 
 //variables
-
+time_t epoch_1 = 0;
 
 //functions
 /* as a return we get a pointer to timer_a object*/
