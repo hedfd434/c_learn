@@ -4,26 +4,33 @@
 
 transaction transaction_main;
 
-int main(int argc, int** argv[])
-{
-    // char set1[10] = "insert";
-    // printf("test_print = %s", set1);
 
-    // int z = strcmp("insert", set1);
+// FILE* file_1;
+products list[10];
+products product_1;
+int main(int rgc, int** argv[])
+{
+
+
+
+
+
+    
     transaction_main.balance = 0;
     transaction_main.current_state = IDLE;
     transaction_main.previous_state = START;
 
 
-    // print_stats(&transaction_main);
-    // printf("current_state = %s\n", available_states[0]);
-    while (1)
-    {
-        machine_check(&transaction_main);
+    // // file_1 = fopen("C:/Users/kubaw/Desktop/c_learn/machine_state/products.csv", "r");
+
+    read_products("C:/Users/kubaw/Desktop/c_learn/machine_state/products.csv", &list);
+    // while (1)
+    // {
+    //     machine_check(&transaction_main);
 
 
-        print_stats(&transaction_main);
-    }
+    //     print_stats(&transaction_main);
+    // }
     
     return 0;
 }
