@@ -1,9 +1,10 @@
-#ifndef INCLUDE_VENDING_MACHINE_H
-#define INCLUDE_VENDING_MACHINE_H
+#ifndef VENDING_MACHINE_H
+#define VENDING_MACHINE_H
 
 #ifdef TEST
     // int test_void(void);
 #endif
+
 //structs definitions
 
 //transaction struct
@@ -13,6 +14,9 @@ typedef enum {
     INSERT,
     PAY,
 }ven_states;
+
+// const char* available_states[4];
+const char* available_states[4]; //variable prototype
 
 typedef struct transaction
 {
@@ -25,6 +29,7 @@ typedef struct transaction
 //functions definitions
 // int machine_scan(transaction* transaction_1, char command[], int command_lenght);
 int handle_communicate(transaction* transaction_1, char command[], int command_lenght);
+
 
 int machine_check(transaction* transaction_2);
 
