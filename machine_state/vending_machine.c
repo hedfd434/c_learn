@@ -9,7 +9,10 @@ const char* available_states[4] = {"START", "IDLE", "INSERT", "PAY"}; //variable
 
 static products products_list[10]; //list which holds product list on form of strcutures list
 
-static const char token[0] = ",";
+static const char token[1] = ",";
+
+//only for testing purposes
+char string_11[20] = "abcd\n\0";
 
 static const char products_list_path[] = "C:/Users/kubaw/Desktop/c_learn/machine_state/products.csv"; //path to file with products
 static int product_list_path_lenght = (sizeof(product_list_path_lenght) / sizeof(char)); //variable base on product_list_path length
@@ -33,9 +36,10 @@ int machine_check(transaction* transaction_2)
 }
 
 
-int handle_communicate(transaction* transaction_1, char command[], int command_LENGMAX_NAME_LENGTH)
+int handle_communicate(transaction* transaction_1, char command[], int command_lenght)
 {
-    int value_buffer = 0;
+    float value_buffer = 0;
+    // float insert_buffer = 0.0; unused
     switch (transaction_1->current_state)
     {
     case IDLE:
@@ -53,15 +57,14 @@ int handle_communicate(transaction* transaction_1, char command[], int command_L
         break;
 
     case INSERT:
-
-        value_buffer = atoi(command);
+        value_buffer = atof(command);
 
         transaction_1->balance += value_buffer;
 
         transaction_1->previous_state = transaction_1->current_state;
 
         transaction_1->current_state = IDLE;
-        //change message to int add to balance
+        
         break;
 
     case PAY:
@@ -84,13 +87,13 @@ int print_stats(transaction* transaction_3)
 
     printf("transaction current state = %s\n", available_states[(transaction_3->current_state)]);
 
-    printf("transaction previous state = %s\n", available_states[(transaction_3->previous_state)]);
+    printf("transaction previous state = %s\n\n", available_states[(transaction_3->previous_state)]);
 
     return 0;
 
 }
 
-int read_products(char file_path[], products* products_ptr[])
+int read_products(char file_path[], products products_ptr[])
 {
 
     // fopen(file_ptr, "r"); already done before
@@ -126,34 +129,42 @@ int read_products(char file_path[], products* products_ptr[])
         //ADD IT
 
 
+
         //copy first value which is index
         string_ptr_buffer = strtok(line_buffer, token); //token must be compatible with specified type otherwise segmenation fault may occure
 
         index_buffer = (atoi(string_ptr_buffer)) - 1;
 
 
+
         // //get the product name
         string_ptr_buffer = strtok(NULL, token);
-        strcpy((products_ptr[index_buffer]->name[0]), string_ptr_buffer); //sementation faullt
-        
-        // products_list[index_buffer].name = "";
-        // strcpy((products_list[index_buffer].name), string_ptr_buffer); //segmentation fault
 
-        // // products_list[index_buffer].name = "test";
+        strcpy(name_buffer, string_ptr_buffer);
 
+        printf("string_ptr_buffer = %s\n", name_buffer);
 
-        // //get the product price
-        // string_ptr_buffer = strtok(NULL, ',');
-        // price_buffer = atof(string_ptr_buffer);
-        // products_list[index_buffer].price = atof(string_ptr_buffer);
-        
+        strcpy((products_ptr[index_buffer].name), name_buffer); //check if it works properly
 
 
 
+        //get the product price
+        string_ptr_buffer = strtok(NULL, token);
 
+        price_buffer = atof(string_ptr_buffer);
+
+        products_ptr[index_buffer].price = price_buffer;
     }
 
 
     fclose(file_buffer);
     // fclose(file_ptr);
+}
+
+int list_print(products list_ptr[])
+{
+    for(int i = 0; i < MAX_PRODUCT; i++)
+    {
+        printf("%d. %s, %f\n", (i + 1) , list_ptr[i].name, list_ptr[i].price);
+    }
 }

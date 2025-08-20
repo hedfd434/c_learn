@@ -33,7 +33,7 @@ typedef struct transaction
 {
     ven_states current_state;
     ven_states previous_state;
-    int balance;
+    float balance;
 } transaction;
 
 typedef struct products
@@ -51,7 +51,7 @@ const char* available_states[4]; //variable prototype
 
 //functions definitions
 // int machine_scan(transaction* transaction_1, char command[], int command_LENGTH);
-int handle_communicate(transaction* transaction_1, char command[], int command_LENGTH);
+int handle_communicate(transaction* transaction_1, char command[], int command_lenght);
 
 
 int machine_check(transaction* transaction_2);
@@ -61,7 +61,9 @@ int print_stats(transaction* transaction_3);
 
 
 
-int read_products(char file_path[], products* products_ptr[]);
+int read_products(char file_path[], products products_ptr[]);
+
+int list_print(products list_ptr[]);
 
 
 
