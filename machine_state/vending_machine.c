@@ -5,9 +5,9 @@
 #include "vending_machine.h"
 
 //variables and constant
-const char* available_states[4] = {"START", "IDLE", "INSERT", "PAY"}; //variable definition
+const char* available_states[4] = {"START", "IDLE", "LIST", "INSERT", "PAY"}; //variable definition
 
-static products products_list[10]; //list which holds product list on form of strcutures list
+products products_list[10]; //list which holds product list on form of strcutures list
 
 static const char token[1] = ",";
 
@@ -38,25 +38,35 @@ int machine_check(transaction* transaction_2)
 
 int handle_communicate(transaction* transaction_1, char command[], int command_lenght)
 {
-    float value_buffer = 0;
     // float insert_buffer = 0.0; unused
     switch (transaction_1->current_state)
     {
-    case IDLE:
+    case IDLE: //idle start state
+        //change next state in refere to command
         if(strcmp("insert", command) == 0) //different way of comparing strins... strcmp
         {
             transaction_1->previous_state = transaction_1->current_state;
 
             transaction_1->current_state = INSERT;
         }
-        else if(strcmp("list", command) == 0)
+        else if(strcmp("list", command) == 0) //list all of the available items
         {
+            transaction_1->previous_state = transaction_1->current_state;
+
+            transaction_1->current_state = LIST;
             //show list of products available to buy with prices
         }
         //add different cases
         break;
 
     case INSERT:
+        /* accessible form many states, next state after insertion is origin state
+        so for example if function came from idle it should back to the idle
+        if it came from list, it sholuld back to the list 
+        and so on*/
+        
+        float value_buffer = 0;
+
         value_buffer = atof(command);
 
         transaction_1->balance += value_buffer;
@@ -67,12 +77,33 @@ int handle_communicate(transaction* transaction_1, char command[], int command_l
         
         break;
 
-    case PAY:
-        break;
+    case LIST:
+
+        //print all of the items //add list of read products as the argument of function
+        // list_print()
+
+
+
+        //give and option to come back to idle, insert more money, or buy product (in future add return option)
+        char command_buffer[20];
+
+        scanf("choose next state: \n-to buy product type buy\n-to insert more money type insert\n- to get back to the idle type idle\ncommand: %d", command_buffer);
+
+        if(strcmp(command_buffer, "buy\0"))
+        {
+            //change state for buy
+        }
+        else if(strcmp(command_buffer, "isenrt\0"))
+        {
+            //change state for isnert
+        }
+        else if(strcmp(command_buffer, "idle"))
+        {
+            //change state for idle
+        }
         
-    // case change:
-    //     break;        
-    
+        break;
+
     default:
         break;
     }

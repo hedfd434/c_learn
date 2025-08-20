@@ -23,6 +23,7 @@
 typedef enum {
     START = 0,
     IDLE,
+    LIST,
     INSERT,
     PAY,
 }ven_states;
@@ -43,7 +44,7 @@ typedef struct products
 }products;
 
 // const char* available_states[4];
-const char* available_states[4]; //variable prototype
+const char* available_states[5]; //variable prototype
 
 
 

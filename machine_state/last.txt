@@ -1,0 +1,2 @@
+1. insert back to previous state
+2. list go to states
