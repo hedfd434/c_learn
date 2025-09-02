@@ -35,16 +35,20 @@ int machine_check(transaction* transaction_2)
             char char_buffer_1[5] = "buy\0";
             handle_communicate(transaction_2, char_buffer_1[0], 4);
         }
-        char command_buffer[10] = "";
-        printf("current state = %s\n\n", available_states[transaction_2->current_state]);
+        else 
+        {
+            char command_buffer[10] = "";
+            printf("current state = %s\n\n", available_states[transaction_2->current_state]);
 
-        printf("type in a command:");
+            printf("type in a command:");
 
-        scanf("%s", &command_buffer);
+            scanf("%s", &command_buffer);
 
-        printf("\n\n");
+            printf("\n\n");
 
-        handle_communicate(transaction_2, &command_buffer[0], (sizeof(command_buffer) / sizeof(char)) );
+            handle_communicate(transaction_2, &command_buffer[0], (sizeof(command_buffer) / sizeof(char)) );
+        }
+
     }
     return 0;
 }
@@ -71,6 +75,13 @@ int handle_communicate(transaction* transaction_1, char command[], int command_l
             transaction_1->previous_state = transaction_1->current_state;
 
             transaction_1->current_state = LIST;
+            //show list of products available to buy with prices
+        }
+        else if(strcmp("buy", command) == 0) //list all of the available items
+        {
+            transaction_1->previous_state = transaction_1->current_state;
+
+            transaction_1->current_state = BUY;
             //show list of products available to buy with prices
         }
         //add different cases
@@ -143,14 +154,72 @@ int handle_communicate(transaction* transaction_1, char command[], int command_l
         //check if the user has enough craedit to buy this product
         float current_balance = transaction_1->balance;
         float wanted_product_price = transaction_1->available_products[product_number_buffer].price;
+         //if user has enough money proceedd to the product dispense then return left money
+        if(current_balance >= wanted_product_price)
+        {
+            //proced to dispense and then to return
+            printf("dispense product nr.%d\n", product_number_buffer);
+            
+            transaction_1->balance -= wanted_product_price;
+
+            if(transaction_1->balance > 0.0)
+            {
+                printf("money return %f\n", transaction_1->balance);
+
+                transaction_1->balance = 0;
+            }
+            else
+            {
+                printf("no money to return\n");
+            }
+
+            transaction_1->previous_state = transaction_1->current_state;
+
+            transaction_1->current_state = IDLE;
+
+        }
+        //if the user does not have enough money ask them if they want to put more money or withdraw money
+        else
+        {
+            //ask about more money or to withdraw money
+            printf("not enough credit\n");
+            printf("choose next state: \n-to buy product type buy\n-to insert more money type insert\n- to get back to the idle type idle\ncommand: ");
+            scanf("%s", &command_buffer);
+
+                    if(strcmp(command_buffer, "buy\0") == 0) //to buy product
+        {
+            //change state for buy
+            transaction_1->previous_state = transaction_1->current_state;
+
+            transaction_1->current_state = BUY;
+        }
+        else if(strcmp(command_buffer, "insert\0") == 0) // to insert more money
+        {
+            //change state for isnert
+            transaction_1->previous_state = transaction_1->current_state;
+
+            transaction_1->current_state = INSERT;
+        }
+        else if(strcmp(command_buffer, "idle\0") == 0) //just come back to the idle state
+        {
+            //change state for idle
+            transaction_1->previous_state = transaction_1->current_state;
+
+            transaction_1->current_state = IDLE;
+        }
+        else
+        {
+            printf("ERROR\n");
+        }
+        }
         // if(transaction_1->balance < transaction_1->available_products[product_number_buffer].price)
         // {
 
         // }
 
-        //if user has enough money proceedd to the product dispense then return left money
+       
 
-        //if the user does not have enough money ask them if they want to put more money or withdraw money
+        
         break;
 
 
