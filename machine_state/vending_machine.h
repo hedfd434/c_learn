@@ -25,23 +25,24 @@ typedef enum {
     IDLE,
     LIST,
     INSERT,
-    PAY,
+    BUY,
 }ven_states;
-
-
-
-typedef struct transaction
-{
-    ven_states current_state;
-    ven_states previous_state;
-    float balance;
-} transaction;
 
 typedef struct products
 {
     float price;
     char name[MAX_NAME_LENGTH];
 }products;
+
+typedef struct transaction
+{
+    ven_states current_state;
+    ven_states previous_state;
+    float balance;
+    products available_products[MAX_PRODUCT]; //should it be a pointer ?
+} transaction;
+
+
 
 // const char* available_states[4];
 const char* available_states[5]; //variable prototype

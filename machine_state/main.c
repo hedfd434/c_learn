@@ -7,6 +7,8 @@ transaction transaction_main;
 
 // FILE* file_1;
 products list[10];
+
+
 // products product_1;
 int main(int rgc, int** argv[])
 {
@@ -24,8 +26,10 @@ int main(int rgc, int** argv[])
     // // file_1 = fopen("C:/Users/kubaw/Desktop/c_learn/machine_state/products.csv", "r");
 
     // read_products("C:/Users/kubaw/Desktop/c_learn/machine_state/products.csv", list);
+    read_products("C:/Users/kubaw/Desktop/c_learn/machine_state/products.csv", transaction_main.available_products);
 
-    // list_print(list);
+    // list_print(transaction_main.available_products);
+
     while (1)
     {
         machine_check(&transaction_main);

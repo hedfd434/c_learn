@@ -5,7 +5,7 @@
 #include "vending_machine.h"
 
 //variables and constant
-const char* available_states[4] = {"START", "IDLE", "LIST", "INSERT", "PAY"}; //variable definition
+const char* available_states[5] = {"START", "IDLE", "LIST", "INSERT", "BUY"}; //variable definition
 
 products products_list[10]; //list which holds product list on form of strcutures list
 
@@ -19,8 +19,22 @@ static int product_list_path_lenght = (sizeof(product_list_path_lenght) / sizeof
 
 int machine_check(transaction* transaction_2)
 {
+    //add exception for certain states
     if(transaction_2->current_state != transaction_2->previous_state)
     {
+        //add if the current state is equal to list...
+        if(transaction_2->current_state == LIST)
+        {
+            //automatically handle list command
+            char char_buffer_1[5] = "list\0";
+            handle_communicate(transaction_2, char_buffer_1[0], 5);
+        }
+        else if(transaction_2->current_state == BUY)
+        {
+            //automatically handle buy command
+            char char_buffer_1[5] = "buy\0";
+            handle_communicate(transaction_2, char_buffer_1[0], 4);
+        }
         char command_buffer[10] = "";
         printf("current state = %s\n\n", available_states[transaction_2->current_state]);
 
@@ -39,6 +53,9 @@ int machine_check(transaction* transaction_2)
 int handle_communicate(transaction* transaction_1, char command[], int command_lenght)
 {
     // float insert_buffer = 0.0; unused
+    float value_buffer = 0.0;
+    char command_buffer[20];
+    int product_number_buffer;
     switch (transaction_1->current_state)
     {
     case IDLE: //idle start state
@@ -65,7 +82,7 @@ int handle_communicate(transaction* transaction_1, char command[], int command_l
         if it came from list, it sholuld back to the list 
         and so on*/
         
-        float value_buffer = 0;
+        
 
         value_buffer = atof(command);
 
@@ -80,29 +97,62 @@ int handle_communicate(transaction* transaction_1, char command[], int command_l
     case LIST:
 
         //print all of the items //add list of read products as the argument of function
-        // list_print()
+        list_print(transaction_1->available_products);
 
 
 
         //give and option to come back to idle, insert more money, or buy product (in future add return option)
-        char command_buffer[20];
 
-        scanf("choose next state: \n-to buy product type buy\n-to insert more money type insert\n- to get back to the idle type idle\ncommand: %d", command_buffer);
+        printf("choose next state: \n-to buy product type buy\n-to insert more money type insert\n- to get back to the idle type idle\ncommand: ");
+        scanf("%s", &command_buffer);
 
-        if(strcmp(command_buffer, "buy\0"))
+        if(strcmp(command_buffer, "buy\0") == 0) //to buy product
         {
             //change state for buy
+            transaction_1->previous_state = transaction_1->current_state;
+
+            transaction_1->current_state = BUY;
         }
-        else if(strcmp(command_buffer, "isenrt\0"))
+        else if(strcmp(command_buffer, "insert\0") == 0) // to insert more money
         {
             //change state for isnert
+            transaction_1->previous_state = transaction_1->current_state;
+
+            transaction_1->current_state = INSERT;
         }
-        else if(strcmp(command_buffer, "idle"))
+        else if(strcmp(command_buffer, "idle\0") == 0) //just come back to the idle state
         {
             //change state for idle
+            transaction_1->previous_state = transaction_1->current_state;
+
+            transaction_1->current_state = IDLE;
+        }
+        else
+        {
+            printf("ERROR\n");
         }
         
         break;
+
+    case BUY:
+
+        //get user input about wanted product
+        printf("type the number of wanted product:");
+        scanf("%d", &product_number_buffer);
+
+        //check if the user has enough craedit to buy this product
+        float current_balance = transaction_1->balance;
+        float wanted_product_price = transaction_1->available_products[product_number_buffer].price;
+        // if(transaction_1->balance < transaction_1->available_products[product_number_buffer].price)
+        // {
+
+        // }
+
+        //if user has enough money proceedd to the product dispense then return left money
+
+        //if the user does not have enough money ask them if they want to put more money or withdraw money
+        break;
+
 
     default:
         break;
@@ -114,7 +164,7 @@ int handle_communicate(transaction* transaction_1, char command[], int command_l
 
 int print_stats(transaction* transaction_3)
 {
-    printf("transaction balance = %d\n", transaction_3->balance);
+    printf("transaction balance = %f\n", transaction_3->balance);
 
     printf("transaction current state = %s\n", available_states[(transaction_3->current_state)]);
 
@@ -198,4 +248,6 @@ int list_print(products list_ptr[])
     {
         printf("%d. %s, %f\n", (i + 1) , list_ptr[i].name, list_ptr[i].price);
     }
+
+    printf("\n");
 }

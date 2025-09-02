@@ -1,2 +1,4 @@
 1. insert back to previous state
 2. list go to states
+
+in future add stock for vending machine

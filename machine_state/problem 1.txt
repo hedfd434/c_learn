@@ -1,0 +1,11 @@
+problem 1
+
+i want to print out an array of structs
+function which print its, is in the library
+
+struct is defined and arranged in main.c
+
+so the problem is that i dont have acces to this struct
+
+possible solutions:
+1. move this list to transaction_main struct
