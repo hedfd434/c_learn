@@ -78,5 +78,15 @@ int scalar_div(vector * v_1, double scalar_val)
 }
 
 //dot product
+double dot_product(vector * v_1, vector * v_2)
+{
+    //where v_1 is force vector and v_2 is displacement vector
+    double relative_angle = fabs(v_1->angle - v_2->angle);
+
+    double dot_product = fabs(v_1->magnitude) * fabs(v_2->magnitude) * cos(relative_angle * (M_PI / 180));
+
+
+    return dot_product;
+}
 
 //cross product
