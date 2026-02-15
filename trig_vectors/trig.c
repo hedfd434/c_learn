@@ -83,10 +83,22 @@ double dot_product(vector * v_1, vector * v_2)
     //where v_1 is force vector and v_2 is displacement vector
     double relative_angle = fabs(v_1->angle - v_2->angle);
 
-    double dot_product = fabs(v_1->magnitude) * fabs(v_2->magnitude) * cos(relative_angle * (M_PI / 180));
+    double dot_product = fabs(v_1->magnitude) * fabs(v_2->magnitude) * cos(relative_angle * (M_PI / 180.0 ));
 
 
     return dot_product;
 }
 
 //cross product
+double cross_product(vector * v_1, vector * v_2)
+{
+    //in case of torque
+    //where v_1 is radius and v_2 is applied force
+    //v_1 contains radius of vector point application and an angle of the radius that starts from the imaginary x axis and center of this plane is located in the hinge of the lever
+    //v_2 contains magnitude and ang angle of applied force to the point specified in the vector v_1
+
+    double relative_angle = v_2->angle - v_1->angle;
+    double cross_product = v_1->magnitude * v_2->magnitude * sin(relative_angle * M_PI / 180.0);
+
+    return cross_product;
+}

@@ -27,4 +27,5 @@ int vector_dissasemble(vector * v_1);
 int scalar_multi(vector * v_1, double scalar_val);
 int scalar_div(vector * v_1, double scalar_val);
 double dot_product(vector * v_1, vector * v_2);
+double cross_product(vector * v_1, vector * v_2);
 #endif
